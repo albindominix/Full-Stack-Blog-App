@@ -10,11 +10,11 @@ const Navbar = () => {
           <img className='w-[240px]' src={logo} alt="" />
         </div>
         <div className="links flex items-center gap-[20px]">
-          <Link className='navLink active'>Home</Link>
-          <Link className='navLink'>About</Link>
-          <Link className='navLink'>Blogs</Link>
-          <Link className='navLink'>Services</Link>
-          <Link className='navLink'>Contact</Link>
+          <Link to="/" className='navLink active'>Home</Link>
+          <Link to="/" className='navLink'>About</Link>
+          <Link to="/" className='navLink'>Blogs</Link>
+          <Link to="/" className='navLink'>Services</Link>
+          <Link to="/" className='navLink'>Contact</Link>
 
           <button onClick={()=>{
             localStorage.removeItem("token");
