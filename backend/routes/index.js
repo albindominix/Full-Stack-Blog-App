@@ -6,6 +6,8 @@ var bcrypt = require('bcryptjs');
 const multer  = require('multer');
 const path = require('path');
 var jwt = require('jsonwebtoken');
+const { GoogleGenAI } = require("@google/genai");
+const genAI = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 const secret = process.env.JWT_SECRET || "dev_secret";
 
@@ -165,6 +167,47 @@ router.post("/getBlog", async (req, res) => {
       blog: blog
     })
   }
-})
+});
+
+
+
+router.post("/summarize", async (req, res) => {
+  try {
+    const { content } = req.body;
+    const prompt = `Summarize the following blog post:\n\n${content}`;
+
+    const response = await genAI.models.generateContent({
+      model: "gemini-2.0-flash-001",
+      contents: prompt,
+    });
+
+    // response.text is a string (property), not a function
+    res.json({ success: true, summary: response.text });
+  } catch (error) {
+    console.error("Error summarizing:", error);
+    res.status(500).json({ success: false, msg: "Error summarizing content." });
+  }
+});
+
+
+router.post("/generate", async (req, res) => {
+  try {
+    const { prompt } = req.body;
+    const fullPrompt =
+      `Generate a blog post about "${prompt}". ` +
+      `Format it using HTML tags like <h3> for headings and <p> for paragraphs.`;
+
+    const response = await genAI.models.generateContent({
+      model: "gemini-2.0-flash-001",
+      contents: fullPrompt,
+    });
+
+    res.json({ success: true, content: response.text });
+  } catch (error) {
+    console.error("Error generating content:", error);
+    res.status(500).json({ success: false, msg: "Error generating content." });
+  }
+});
+
 
 module.exports = router;
