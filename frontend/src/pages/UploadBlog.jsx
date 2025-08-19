@@ -62,21 +62,34 @@ const UploadBlog = () => {
     <>
       {
         isAdmin == false ?
-          <>
-            <div className="con flex items-center justify-center flex-col h-screen">
-              <div className='w-[25vw] h-[fit] flex flex-col rounded-xl p-[20px] bg-[#0F0E0E]'>
-                <h3 className='text-2xl mb-4'>Login to upload blog</h3>
+        <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black">
+        <div className="w-full max-w-md p-8 bg-gray-900 rounded-2xl shadow-lg border border-gray-700">
+          <h3 className="text-2xl font-semibold text-white text-center mb-6">
+            Admin Login
+          </h3>
 
-                <div className="inputBox">
-                  <input onChange={(e) => { setAdminSecret(e.target.value) }} value={adminSecret} type="text" placeholder='Enter admin secret' />
-                </div>
+          <div className="mb-4">
+            <input
+              onChange={(e) => setAdminSecret(e.target.value)}
+              value={adminSecret}
+              type="password"
+              placeholder="Enter admin secret"
+              className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            />
+          </div>
 
-                <p className='text-red-500 text-[13px]'>{error}</p>
+          {error && (
+            <p className="text-red-400 text-sm mb-3">{error}</p>
+          )}
 
-                <button className="btnNormal mt-3" onClick={() => { checkAdmin() }}>Login</button>
-              </div>
-            </div>
-          </> : <>
+          <button
+            className="w-full py-2 rounded-lg bg-blue-600 hover:bg-blue-500 transition font-medium"
+            onClick={checkAdmin}
+          >
+            Login
+          </button>
+        </div>
+      </div>: <>
             <Navbar />
             <div className='px-[100px]'>
               <h3>Upload Blog</h3>
