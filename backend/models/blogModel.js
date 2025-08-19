@@ -1,6 +1,7 @@
 var mongoose = require("mongoose");
 
-mongoose.connect("mongodb://127.0.0.1:27017/blogApp");
+const mongoUri = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/blogApp";
+mongoose.connect(mongoUri);
 
 const blogSchema = new mongoose.Schema({
   title: String,

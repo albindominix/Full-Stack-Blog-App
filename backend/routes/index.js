@@ -7,7 +7,7 @@ const multer  = require('multer');
 const path = require('path');
 var jwt = require('jsonwebtoken');
 
-const secret = "secret";
+const secret = process.env.JWT_SECRET || "dev_secret";
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
